@@ -10,7 +10,12 @@ const url = 'https://course-api.com/react-tours-project';
 function App() {
   const [loading, setLoading] = useState(true)
   const [tours, setTour] = useState([])
-
+  
+  const removeTour = (id) => {
+    const newTour = tours.filter((el) => el.id !== id);
+    console.log(newTour);
+     setTour(newTour)
+  }
   // async function fetchData() {
   //   try {
   //     const response = await fetch(url);
@@ -30,9 +35,9 @@ function App() {
   }
   useEffect(() => {tourData(data)}, [])
   return (
-            <main>
+            <main className={tours.length === 0 ? 'title' : ''}>
               {
-                loading ? (<Loading />) : (<Tours tours={tours} />)
+                loading ? (<Loading />) : tours.length === 0 ? (<h2> No Tour(s) </h2>): (<Tours tours={tours } removeTour={removeTour}/>)
               }
               
             </main>
